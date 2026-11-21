@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <h2 class="mb-4 text-center fw-bold">Зв'язатися зі мною</h2>
+
+        <section class="card shadow-sm p-4 border-0">
+            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Повідомлення успішно надіслано!');">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Ваше ім'я</label>
+                    <input type="text" class="form-control" id="name" placeholder="Введіть ваше ім'я" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email адреса</label>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Тема</label>
+                    <input type="text" class="form-control" id="subject" placeholder="Тема повідомлення">
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Повідомлення</label>
+                    <textarea class="form-control" id="message" rows="4" placeholder="Напишіть ваше повідомлення..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-2">Надіслати повідомлення</button>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}
