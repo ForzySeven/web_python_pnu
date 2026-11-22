@@ -15,13 +15,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('contacts') }}">Контакти</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('users.greetings', name='John') }}">Користувачі</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('products.product_list') }}">Товари</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('users.profile') }}">Профіль</a>
+                </li>
+                {% if session.get('username') %}
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="{{ url_for('users.logout') }}">Вийти ({{ session.get('username') }})</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="{{ url_for('users.login') }}">Вхід</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
