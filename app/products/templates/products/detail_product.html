@@ -4,13 +4,41 @@
 
 {% block content %}
 <div class="card shadow-sm border-0 p-4">
-    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
-        <h2 class="h3 fw-bold mb-0">{{ product.name }}</h2>
-        <span class="badge bg-success fs-5">${{ product.price }}</span>
-    </div>
-    <p class="fs-5 mb-4">{{ product.content }}</p>
-    <div>
-        <a href="{{ url_for('products.product_list') }}" class="btn btn-outline-secondary">&larr; Назад до списку товарів</a>
+    <div class="row g-4">
+        <div class="col-md-5">
+            {% if product.image %}
+                <img src="{{ url_for('products.static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm">
+            {% else %}
+                <div class="bg-secondary bg-opacity-10 rounded d-flex align-items-center justify-content-center text-muted" style="height: 280px;">
+                    <span>Зображення відсутнє</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-7 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                <div>
+                    <span class="badge bg-info text-dark mb-1">{{ product.category }}</span>
+                    <h2 class="h3 fw-bold mb-0">{{ product.name }}</h2>
+                </div>
+                <span class="badge bg-success fs-4">${{ "%.2f"|format(product.price) }}</span>
+            </div>
+
+            <p class="fs-5 mb-3">{{ product.content }}</p>
+
+            <ul class="list-unstyled text-muted small mb-4">
+                <li><strong>ID товару:</strong> {{ product.id }}</li>
+                <li><strong>Кількість на складі:</strong> {{ product.quantity }} од.</li>
+                <li><strong>Дата створення:</strong> {{ product.created_at }}</li>
+            </ul>
+
+            <div class="mt-auto d-flex gap-2 flex-wrap">
+                <a href="{{ url_for('products.product_list') }}" class="btn btn-outline-secondary">&larr; До списку</a>
+                <a href="{{ url_for('products.edit_product', id=product.id) }}" class="btn btn-warning">Редагувати</a>
+                <form action="{{ url_for('products.delete_product', id=product.id) }}" method="POST" onsubmit="return confirm('Ви дійсно бажаєте видалити цей товар?');">
+                    <button type="submit" class="btn btn-danger">Видалити</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

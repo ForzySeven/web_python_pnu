@@ -3,18 +3,42 @@
 {% block title %}Каталог товарів{% endblock %}
 
 {% block content %}
-<h2 class="mb-4 fw-bold">Список товарів</h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Каталог товарів</h2>
+    <a href="{{ url_for('products.add_product') }}" class="btn btn-success">+ Додати товар</a>
+</div>
+
 <div class="row g-4">
     {% for item in products %}
     <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0 p-3">
+        <div class="card h-100 shadow-sm border-0 overflow-hidden">
+            {% if item.image %}
+                <img src="{{ url_for('products.static', filename=item.image) }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+                <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted" style="height: 200px;">
+                    <span>Зображення відсутнє</span>
+                </div>
+            {% endif %}
+
             <div class="card-body d-flex flex-column">
-                <h3 class="h5 card-title fw-bold">{{ item.name }}</h3>
-                <p class="text-success fw-bold fs-5 mb-2">${{ item.price }}</p>
-                <p class="card-text text-muted flex-grow-1">{{ item.content }}</p>
-                <a href="{{ url_for('products.detail_product', product_id=item.id) }}" class="btn btn-primary mt-3">Детальніше</a>
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h3 class="h5 card-title fw-bold mb-0">{{ item.name }}</h3>
+                    <span class="badge bg-info text-dark">{{ item.category }}</span>
+                </div>
+                <p class="text-success fw-bold fs-5 mb-1">${{ "%.2f"|format(item.price) }}</p>
+                <p class="small text-muted mb-1">На складі: <strong>{{ item.quantity }} шт.</strong></p>
+                <p class="small text-muted mb-3">Додано: {{ item.created_at }}</p>
+
+                <div class="mt-auto d-flex gap-2">
+                    <a href="{{ url_for('products.detail_product', id=item.id) }}" class="btn btn-primary btn-sm flex-grow-1">Детальніше</a>
+                    <a href="{{ url_for('products.edit_product', id=item.id) }}" class="btn btn-outline-warning btn-sm">Редагувати</a>
+                </div>
             </div>
         </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="alert alert-info">Товарів поки немає. Натисніть «Додати товар», щоб створити перший запис.</div>
     </div>
     {% endfor %}
 </div>
