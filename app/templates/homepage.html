@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Головна сторінка{% endblock %}
+
+{% block content %}
+<section class="card shadow-sm p-4 border-0">
+    <h2 class="h3 text-primary mb-3">Ласкаво просимо на головну сторінку!</h2>
+    <p class="mb-2">Інформація про ваш браузер (User-Agent):</p>
+    <div class="alert alert-secondary mb-0">
+        <code>{{ agent }}</code>
+    </div>
+</section>
+{% endblock %}
